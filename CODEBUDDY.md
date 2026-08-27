@@ -1,6 +1,6 @@
 # CODEBUDDY.md This file provides guidance to CodeBuddy when working with code in this repository.
 
-This repository (`flutter_empty`) is an empty Flutter app template with commonly used dependencies already initialized, intended as a fast starting point for business development. Flutter is managed via **FVM** (pinned to Flutter 3.38.5, Dart SDK `^3.10.4`, see `.fvmrc`).
+This repository (`flutter_empty`) is an empty Flutter app template with commonly used dependencies already initialized, intended as a fast starting point for business development. Flutter is managed via **FVM** (pinned to Flutter 3.41.0, Dart SDK 3.11.0, see `.fvmrc`).
 
 ## Commands
 
@@ -13,7 +13,7 @@ All commands must be run with `fvm` so the pinned Flutter version is used. Never
 - **Run a single test file**: `fvm flutter test test/models/demo_test.dart`
 - **Run tests matching a name**: `fvm flutter test --plain-name "Demo"`
 - **Generate JSON models** from `jsons/` into `lib/models/`: `fvm dart run json_to_model`
-- **Run codegen** for `retrofit` / `mobx` (`.g.dart` files): `fvm dart run build_runner build --delete-conflicting-outputs` (use `watch` to auto-rebuild)
+- **Run codegen** for `retrofit` / `mobx` (`.g.dart` files): `fvm dart run build_runner build` (use `watch` to auto-rebuild)
 - **Build release APK**: `fvm flutter build apk --release`
 - **Build iOS**: `fvm flutter build ios --release`
 - **Check dependency updates**: `fvm flutter pub outdated`
