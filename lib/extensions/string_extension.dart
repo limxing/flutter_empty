@@ -11,7 +11,7 @@ extension StringExtension on String {
         text: this,
         textStyle: const TextStyle(fontSize: 16, color: Colors.white),
         contentColor: Colors.black87,
-        align: Alignment.center,
+        align: Alignment(0, 0.8),
         contentPadding: const EdgeInsets.only(top: 6, left: 10, right: 10, bottom: 6));
     return this;
   }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_empty/common.dart';
 import 'package:flutter_empty/extensions/context_extension.dart';
 import 'package:flutter_empty/native_channel.dart';
+import 'package:flutter_empty/network/net.dart';
 import 'package:flutter_empty/ui/main/home_page.dart';
 import 'package:flutter_empty/utils/preference.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preference.init();
   NativeChannel.init();
+  Net.init();
   runApp(const MyApp());
 }
 

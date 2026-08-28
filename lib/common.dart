@@ -6,7 +6,9 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_empty/main.dart';
 import 'package:logger/logger.dart';
-
+//设计图最小宽度，用于屏幕适配
+const padDesignMinWidth = 768.0;
+const phoneDesignMinWidth = 375.0;
 const appName = "Demo";
 final logger = Logger();
 typedef FutureFunction = Future<dynamic> Function();

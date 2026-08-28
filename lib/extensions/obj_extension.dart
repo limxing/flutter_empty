@@ -7,6 +7,10 @@ extension ObjectExtension on Object? {
     if (kDebugMode) logger.i(this);
     return this;
   }
+  get d {
+    if (kDebugMode) logger.d(this);
+    return this;
+  }
   get e {
     if (kDebugMode) logger.e(this);
     return this;
