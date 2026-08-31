@@ -1,12 +1,11 @@
-import 'package:any_image_view/any_image_view.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_empty/extensions/int_extension.dart';
-import 'package:flutter_empty/extensions/kotlin_func.dart';
-import 'package:flutter_empty/extensions/obj_extension.dart';
 import 'package:flutter_empty/extensions/string_extension.dart';
+import 'package:flutter_empty/ui/main/home_view_model.dart';
 import 'package:flutter_empty/widgets/ImageView.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 import '../../network/net.dart';
 
@@ -18,32 +17,74 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final HomeViewModel _homeViewModel = HomeViewModel();
+
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        backgroundColor: Colors.red,
-        middle: Text(
-          "Home",
-          style: TextStyle(color: Colors.black, fontSize: 18.pt),
+    return Provider(
+      create: (BuildContext context) => _homeViewModel,
+      builder: (context, child) => CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          backgroundColor: Colors.white,
+          middle: Text(
+            "Home",
+            style: TextStyle(color: Colors.black, fontSize: 18.pt),
+          ),
         ),
-      ),
-      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(color: Colors.red,width: 370.pt,height: 20,margin: EdgeInsets.only(bottom: 10),),
+            Container(color: Colors.green, width: 370.pt, height: 20, margin: EdgeInsets.only(bottom: 10)),
             Imageview(
               imagePath: "images/demo.svg",
               height: 100.pt,
               width: 100.pt,
-              onTap: ()async{
-                "No touch me".toast;
-                var data = await Net.api.demo(0, {"data":"dd"});
-                print(data);
-
+              onTap: () async {
+                var data = await Net.api.demo(0, {"data": "dd"});
+                data.toString().toast;
               },
+            ),
+            Observer(
+              builder: (context) => Text(
+                "Num:${_homeViewModel.num}",
+                style: TextStyle(fontSize: 20.pt, fontWeight: FontWeight.bold),
+              ),
+            ),
+            CupertinoButton.filled(onPressed: _homeViewModel.numPlus, child: Text("Click")),
+            Expanded(
+              child: Observer(
+                builder: (context) => ListView(
+                  children: _homeViewModel.demoList
+                      .map(
+                        (demo) => Container(
+                          height: 40.pt,
+                          alignment: Alignment.center,
+                          child: Text(
+                            demo.name,
+                            style: TextStyle(color: Colors.black, fontSize: 15.pt),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ),
+            CupertinoTabBar(
+              backgroundColor: Colors.white,
+              height: 60.pt,
+              border: null,
+              currentIndex: 1,
+              items: [
+                BottomNavigationBarItem(
+                  icon: Imageview(imagePath:"images/demo.svg", width: 30.pt, height: 30.pt),
+                  label: "首页"
+                ),
+                BottomNavigationBarItem(
+                  icon: Imageview(imagePath: "images/demo.svg", width: 30.pt, height: 30.pt),
+                  label: "我的"
+                ),
+              ],
             ),
           ],
         ),

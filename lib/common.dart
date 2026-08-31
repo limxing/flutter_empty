@@ -10,6 +10,7 @@ import 'package:logger/logger.dart';
 const padDesignMinWidth = 768.0;
 const phoneDesignMinWidth = 375.0;
 const appName = "Demo";
+const baseUrl = "https://lifeng.site/";
 final logger = Logger();
 typedef FutureFunction = Future<dynamic> Function();
 

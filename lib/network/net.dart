@@ -3,12 +3,12 @@ import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_empty/extensions/obj_extension.dart';
 
+import '../common.dart';
 import '../utils/preference.dart';
 import 'api.dart';
 
 class Net {
   static final Dio _dio = Dio();
-  static const baseUrl = "https://lifeng.site/";
 
   static Api api = Api(_dio, baseUrl: baseUrl);
 
@@ -38,9 +38,15 @@ class Net {
         },
         onError: (error, handler) {
           if (kDebugMode) {
-            '❌ ERROR[${error.response?.statusCode}] => ${error.requestOptions.uri} \n💬 MESSAGE: ${error.message}'.p;
+            '❌ ERROR[${error.response?.statusCode}] => ${error.requestOptions.uri} \n💬 MESSAGE: ${error.message}'.e;
           }
-          handler.resolve(Response(requestOptions: RequestOptions(data: '{"code":201,"data":null}')));
+          handler.resolve(
+            Response(
+              statusCode: 200,
+              requestOptions: RequestOptions(),
+              data: '{"data":null,"code":${error.response?.statusCode ?? 400},"msg":"${error.response?.statusMessage}"',
+            ),
+          );
         },
       ),
     );
