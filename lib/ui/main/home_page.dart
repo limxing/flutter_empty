@@ -5,6 +5,7 @@ import 'package:flutter_empty/extensions/string_extension.dart';
 import 'package:flutter_empty/ui/main/home_view_model.dart';
 import 'package:flutter_empty/widgets/ImageView.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../network/net.dart';
@@ -18,6 +19,7 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   final HomeViewModel _homeViewModel = HomeViewModel();
+  dynamic _imagePath = "images/demo.svg";
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class _HomepageState extends State<Homepage> {
           children: [
             Container(color: Colors.green, width: 370.pt, height: 20, margin: EdgeInsets.only(bottom: 10)),
             Imageview(
-              imagePath: "images/demo.svg",
+              imagePath: _imagePath,
               height: 100.pt,
               width: 100.pt,
               onTap: () async {
@@ -51,7 +53,24 @@ class _HomepageState extends State<Homepage> {
                 style: TextStyle(fontSize: 20.pt, fontWeight: FontWeight.bold),
               ),
             ),
-            CupertinoButton.filled(onPressed: _homeViewModel.numPlus, child: Text("Click")),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CupertinoButton.filled(onPressed: _homeViewModel.numPlus, child: Text("Click")),
+                TextButton(onPressed: () async {
+                  final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  setState(() {
+                    _imagePath = file;
+                  });
+                }, child: Text("Image")),
+                TextButton(onPressed: ()async{
+                  final file = await ImagePicker().pickImage(source: ImageSource.camera);
+                  setState(() {
+                    _imagePath = file;
+                  });
+                }, child: Text("Camera")),
+              ],
+            ),
             Expanded(
               child: Observer(
                 builder: (context) => ListView(

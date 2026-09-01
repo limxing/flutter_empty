@@ -50,6 +50,7 @@ class Imageview extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: AnyImageView(
+        placeholderWidget: Container(),
         imagePath: imagePath,
         width: width,
         height: height,

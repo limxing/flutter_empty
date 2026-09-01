@@ -78,6 +78,10 @@ dependencies:
   encrypt: ^5.0.3
   # Network, Assets, SVG, Lottie, XFile with built-in shimmer loading & error handling.
   any_image_view: ^2.1.0
+  # 闪屏（欢迎）页制作 Usage:fvm dart run flutter_native_splash:create
+  flutter_native_splash: ^2.4.7
+  # 选择图片和调用拍照
+  image_picker: ^1.2.3
 
 
 
@@ -145,3 +149,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+# usage:fvm dart run flutter_native_splash:create
+flutter_native_splash:
+  color: "#ffffff"
+  image: images/icon.png
+  fullscreen: true
+  android_12:
+    color: "#ffffff"
+    image: images/icon.png
+    icon_background_color: "#ffffff"
+  web: false

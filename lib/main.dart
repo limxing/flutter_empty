@@ -3,27 +3,29 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_empty/common.dart';
 import 'package:flutter_empty/extensions/context_extension.dart';
+import 'package:flutter_empty/extensions/int_extension.dart';
 import 'package:flutter_empty/native_channel.dart';
 import 'package:flutter_empty/network/net.dart';
 import 'package:flutter_empty/ui/main/home_page.dart';
 import 'package:flutter_empty/utils/preference.dart';
+import 'package:flutter_empty/widgets/ImageView.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lifecycle/lifecycle.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Preference.init();
   NativeChannel.init();
   Net.init();
   runApp(const MyApp());
 }
 
-final routes = {
-  "/": (context) => const Application(),
-  "main": (context) => const Homepage(),
-};
+final routes = {"/": (context) => const Application(), "main": (context) => const Homepage()};
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -33,8 +35,7 @@ class MyApp extends StatelessWidget {
 
   static BuildContext get appContext => _context;
 
-  static final BotToastNavigatorObserver _botToastNavigatorObserver =
-      BotToastNavigatorObserver();
+  static final BotToastNavigatorObserver _botToastNavigatorObserver = BotToastNavigatorObserver();
 
   // This widget is the root of your application.
   @override
@@ -43,10 +44,7 @@ class MyApp extends StatelessWidget {
     return CupertinoApp(
       title: appName,
       debugShowCheckedModeBanner: kDebugMode,
-      navigatorObservers: [
-        defaultLifecycleObserver,
-        _botToastNavigatorObserver,
-      ],
+      navigatorObservers: [defaultLifecycleObserver, _botToastNavigatorObserver],
       routes: routes,
       initialRoute: '/',
       localizationsDelegates: const [
@@ -57,9 +55,10 @@ class MyApp extends StatelessWidget {
       ],
       theme: const CupertinoThemeData(
         brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
         textTheme: CupertinoTextThemeData(primaryColor: Colors.black),
       ),
-      builder: botToastBuilder
+      builder: botToastBuilder,
     );
   }
 }
@@ -75,17 +74,21 @@ class _ApplicationState extends State<Application> {
   @override
   void initState() {
     super.initState();
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    //   statusBarColor: Colors.transparent,
+    // ));
     // 等首帧渲染完成、导航器解锁后再跳转，避免在 initState 阶段
     // 直接 push 触发 '!navigator._debugLocked' 断言失败
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         context.pushPageReplaceNoAnim("main");
+        FlutterNativeSplash.remove();
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(color: Colors.white);
   }
 }
