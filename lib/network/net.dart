@@ -15,10 +15,11 @@ class Net {
   static SKey<String> proxy = SKey<String>("_proxy");
   static SKey<String> proxyHome = SKey<String>("_proxy_home");
 
-  static void init() {
+  static void init(String userAgent) {
     _dio.options.connectTimeout = Duration(seconds: 10);
     _dio.options.sendTimeout = Duration(seconds: 10);
     _dio.options.receiveTimeout = Duration(seconds: 10);
+    _dio.options.headers["user-agent"] = userAgent;
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {

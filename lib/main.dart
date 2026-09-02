@@ -10,8 +10,10 @@ import 'package:flutter_empty/extensions/int_extension.dart';
 import 'package:flutter_empty/native_channel.dart';
 import 'package:flutter_empty/network/net.dart';
 import 'package:flutter_empty/ui/main/home_page.dart';
+import 'package:flutter_empty/ui/web/web_page.dart';
 import 'package:flutter_empty/utils/preference.dart';
 import 'package:flutter_empty/widgets/ImageView.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lifecycle/lifecycle.dart';
@@ -21,11 +23,18 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Preference.init();
   NativeChannel.init();
-  Net.init();
+  final webUserAgent = await InAppWebViewController.getDefaultUserAgent();
+  Net.init(webUserAgent);
+  // webview debug toggle
+  await InAppWebViewController.setWebContentsDebuggingEnabled(false);
   runApp(const MyApp());
 }
 
-final routes = {"/": (context) => const Application(), "main": (context) => const Homepage()};
+final routes = {
+  "/": (context) => const Application(),
+  "main": (context) => const Homepage(),
+  "web_page": (context) => WebPage(),
+};
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

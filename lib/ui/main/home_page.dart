@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_empty/extensions/context_extension.dart';
 import 'package:flutter_empty/extensions/int_extension.dart';
 import 'package:flutter_empty/extensions/string_extension.dart';
 import 'package:flutter_empty/ui/main/home_view_model.dart';
@@ -69,6 +70,12 @@ class _HomepageState extends State<Homepage> {
                     _imagePath = file;
                   });
                 }, child: Text("Camera")),
+                TextButton(onPressed: ()async{
+
+                  setState(() {
+                  context.pushPageString("web_page");
+                  });
+                }, child: Text("WebPage")),
               ],
             ),
             Expanded(
