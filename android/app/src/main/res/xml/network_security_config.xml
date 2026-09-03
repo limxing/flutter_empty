@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 默认禁止明文 HTTP（与 Android 9+ 系统默认行为一致，此处显式声明） -->
+    <base-config cleartextTrafficPermitted="false" />
+
+    <!-- 白名单域名允许明文 HTTP，按需增删 domain -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">baidu.com</domain>
+    </domain-config>
+</network-security-config>

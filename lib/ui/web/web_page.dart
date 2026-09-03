@@ -8,7 +8,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import '../../extensions/int_extension.dart';
-import '../../extensions/obj_extension.dart';
 
 /// 通用网页
 class WebPage extends StatefulWidget {
@@ -63,9 +62,12 @@ class _WebPageState extends State<WebPage> {
           trailing: Observer(
             builder: (context) => Visibility(
               visible: viewModel.webCanGoback,
-              child: GestureDetector(child: Icon(Icons.close_rounded, color: Colors.black, size: 24.pt),onTap: (){
-                context.pop();
-              },),
+              child: GestureDetector(
+                child: Icon(Icons.close_rounded, color: Colors.black, size: 24.pt),
+                onTap: () {
+                  context.pop();
+                },
+              ),
             ),
           ),
         ),
@@ -79,12 +81,14 @@ class _WebPageState extends State<WebPage> {
                 mediaPlaybackRequiresUserGesture: false,
                 useShouldOverrideUrlLoading: true,
                 cacheEnabled: true,
+                mixedContentMode: MixedContentMode.MIXED_CONTENT_COMPATIBILITY_MODE,
               ),
               onWebViewCreated: viewModel.webOnCreated,
               onLoadStart: viewModel.webOnLoadStart,
               onLoadStop: viewModel.webOnLoadStop,
               onProgressChanged: viewModel.webOnProgress,
               shouldOverrideUrlLoading: viewModel.webShouldLoading,
+              // pullToRefreshController: PullToRefreshController(),
             ),
             Observer(
               builder: (context) {
