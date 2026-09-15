@@ -7,5 +7,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">baidu.com</domain>
+        <!-- IP 只能精确匹配，必须 includeSubdomains="false"；不支持 10.1.*.* 或 CIDR 网段 -->
+        <domain includeSubdomains="false">10.1.50.140</domain>
     </domain-config>
 </network-security-config>

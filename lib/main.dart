@@ -17,7 +17,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lifecycle/lifecycle.dart';
-
+/// 注意屏幕适配，这里直接用的最小宽度限定与设计图计算出的大小.pt，pad与手机为两套模版的情况，如果是只有一套屏幕适配可能不适用
 Future<void> main() async {
   var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

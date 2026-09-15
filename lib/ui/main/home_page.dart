@@ -73,7 +73,7 @@ class _HomepageState extends State<Homepage> {
                 TextButton(onPressed: ()async{
 
                   setState(() {
-                  context.pushPageString("web_page");
+                  context.pushPageString("web_page",arguments: {"url":"http://10.1.50.140/file/download/zhou.mp4"});
                   });
                 }, child: Text("WebPage")),
               ],

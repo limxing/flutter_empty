@@ -21,11 +21,16 @@ class _WebPageState extends State<WebPage> {
   /// 进度到达该值即开始淡出（与 inappwebview 的 100 进度之间留出余量）
   static const _progressFadeThreshold = 0.98;
 
+  /// 未传 url 时加载的本地 HTML 占位页，路径与 pubspec.yaml 的 assets 声明保持一致
+  static const _noUrlFile = "assets/html/no_url.html";
+
   final viewModel = WebViewModel();
 
   @override
   Widget build(BuildContext context) {
-    final url = context.arguments?["url"] ?? "https://www.baidu.com";
+    final url = (context.arguments?["url"] as String?) ?? '';
+    // 未传 url 时加载本地占位页，而不是请求一个写死的网址
+    final hasUrl = url.isNotEmpty;
     return Provider(
       builder: (context, child) => CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
@@ -75,13 +80,16 @@ class _WebPageState extends State<WebPage> {
           children: [
             InAppWebView(
               onTitleChanged: (controller, title) => viewModel.webTitle = title ?? "",
-              initialUrlRequest: URLRequest(url: WebUri(url)),
+              initialUrlRequest: hasUrl ? URLRequest(url: WebUri(url)) : null,
+              // 未传 url 时的本地占位页
+              initialFile: hasUrl ? null : _noUrlFile,
               initialSettings: InAppWebViewSettings(
                 javaScriptEnabled: true,
                 mediaPlaybackRequiresUserGesture: false,
                 useShouldOverrideUrlLoading: true,
                 cacheEnabled: true,
                 mixedContentMode: MixedContentMode.MIXED_CONTENT_COMPATIBILITY_MODE,
+                underPageBackgroundColor: Colors.white
               ),
               onWebViewCreated: viewModel.webOnCreated,
               onLoadStart: viewModel.webOnLoadStart,
